@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { IKImage } from 'imagekitio-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +13,13 @@ const Navbar = () => {
   return (
     <nav className='w-full h-16 md:h-20 flex items-center justify-between'>
       <div className='flex items-center gap-4 text-2xl font-bold'>
-        <img src='/logo.png' alt='logo' className='w-8 h-8' />
+        <IKImage
+          urlEndpoint={import.meta.env.VITE_IMAGEKIT_URL_ENDPOINT}
+          // path='/logo.png'
+          src='https://ik.imagekit.io/devayo/logo.png'
+          className='w-8 h-8'
+          alt='logo'
+        />
         <span>blog</span>
       </div>
       <div className='md:hidden'>
