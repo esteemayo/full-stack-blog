@@ -1,3 +1,5 @@
+import Comment from './Comment';
+
 const Comments = () => {
   return (
     <div className='flex flex-col gap-8 lg:w-3/5 mb-12'>
@@ -12,6 +14,8 @@ const Comments = () => {
           Send
         </button>
       </form>
+
+      <Comment />
     </div>
   );
 };
