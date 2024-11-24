@@ -3,6 +3,8 @@ import { useUser } from '@clerk/clerk-react';
 
 import Upload from '../components/Upload';
 
+import 'react-quill-new/dist/quill.snow.css';
+
 const Write = () => {
   const { isLoaded, isSignedIn } = useUser();
 
