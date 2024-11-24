@@ -1,5 +1,5 @@
-const Upload = () => {
-  return <div>Upload</div>;
+const Upload = ({ children }) => {
+  return <div>{children}</div>;
 };
 
 export default Upload;
