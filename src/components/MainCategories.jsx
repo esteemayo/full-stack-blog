@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 
+import Search from './Search';
+
 const MainCategories = () => {
   return (
     <div className='hidden md:flex items-center justify-center gap-8 bg-white rounded-3xl xl:rounded-full p-4 shadow-lg'>
@@ -42,7 +44,7 @@ const MainCategories = () => {
         </Link>
       </div>
       <span className='text-xl font-medium'>|</span>
-      <div className=''>search</div>
+      <Search />
     </div>
   );
 };
