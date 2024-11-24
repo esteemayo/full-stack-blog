@@ -8,13 +8,19 @@ const Comments = () => {
         <textarea
           name='desc'
           placeholder='Write a comment...'
-          className='w-full p-4 rounded-xl'
+          className='w-full p-4 rounded-xl outline-0 resize-none'
         />
-        <button className='bg-blue-800 px-4 py-3 text-white font-medium rounded-xl capitalize'>
+        <button className='bg-blue-800 px-4 py-3 text-white font-medium rounded-xl capitalize outline-0'>
           Send
         </button>
       </form>
 
+      <Comment />
+      <Comment />
+      <Comment />
+      <Comment />
+      <Comment />
+      <Comment />
       <Comment />
     </div>
   );
