@@ -19,6 +19,13 @@ const Navbar = () => {
         <div className='cursor-pointer text-4xl' onClick={handleToggle}>
           {isOpen ? 'X' : '☰'}
         </div>
+        <div
+          className={`w-full h-screen flex flex-col items-center justify-center absolute top-16 bg-red-600 transition-all ease-in-out ${
+            isOpen ? '-right-0' : '-right-[100%]'
+          }`}
+        >
+          menu
+        </div>
       </div>
       <div className='hidden md:flex'>D</div>
     </nav>
