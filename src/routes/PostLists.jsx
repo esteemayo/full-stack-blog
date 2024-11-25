@@ -1,4 +1,5 @@
 import PostList from '../components/PostList';
+import SideMenu from '../components/SideMenu';
 
 const PostLists = () => {
   return (
@@ -8,7 +9,9 @@ const PostLists = () => {
         <div className=''>
           <PostList />
         </div>
-        <div className=''></div>
+        <div className=''>
+          <SideMenu />
+        </div>
       </div>
     </div>
   );
