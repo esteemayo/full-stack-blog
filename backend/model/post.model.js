@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const { Schema } = mongoose;
+const { Schema, Types } = mongoose;
 
 const postSchema = new Schema(
   {
@@ -31,6 +31,10 @@ const postSchema = new Schema(
     visit: {
       type: Number,
       default: 0,
+    },
+    user: {
+      type: Types.ObjectId,
+      ref: 'User',
     },
   },
   { timestamps: true }
