@@ -3,9 +3,9 @@ import { StrictMode } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
 
-import PostList from './routes/PostList';
-import Login from './routes/Login';
 import Register from './routes/Register';
+import Login from './routes/Login';
+import PostLists from './routes/PostLists';
 import Write from './routes/Write';
 import SinglePost from './routes/SinglePost';
 import Home from './routes/Home.jsx';
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'posts',
-        element: <PostList />,
+        element: <PostLists />,
       },
       {
         path: ':slug',
