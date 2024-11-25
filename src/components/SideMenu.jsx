@@ -3,9 +3,9 @@ import Search from './Search';
 const SideMenu = () => {
   return (
     <aside className='px-4 h-max sticky top-8'>
-      <h1 className='mb-4 text-sm font-medium'>Search</h1>
+      <h1 className='mb-4 text-sm font-medium capitalize'>Search</h1>
       <Search />
-      <h1 className='mt-8 mb-4 text-sm font-medium'>Filter</h1>
+      <h1 className='mt-8 mb-4 text-sm font-medium capitalize'>Filter</h1>
       <div className='flex flex-col gap-2 text-sm'>
         <label htmlFor='' className='flex items-center gap-2 cursor-pointer'>
           <input
@@ -44,14 +44,16 @@ const SideMenu = () => {
           Oldest
         </label>
       </div>
-      <h1 className='mt-8 mb-4 text-sm font-medium'>Categories</h1>
+      <h1 className='mt-8 mb-4 text-sm font-medium capitalize'>Categories</h1>
       <div className='flex flex-col gap-2 text-sm'>
-        <span className='underline cursor-pointer'>All</span>
-        <span className='underline cursor-pointer'>Web Design</span>
-        <span className='underline cursor-pointer'>Development</span>
-        <span className='underline cursor-pointer'>Databases</span>
-        <span className='underline cursor-pointer'>Search Engines</span>
-        <span className='underline cursor-pointer'>Marketing</span>
+        <span className='underline cursor-pointer capitalize'>All</span>
+        <span className='underline cursor-pointer capitalize'>Web design</span>
+        <span className='underline cursor-pointer capitalize'>Development</span>
+        <span className='underline cursor-pointer capitalize'>Databases</span>
+        <span className='underline cursor-pointer capitalize'>
+          Search engines
+        </span>
+        <span className='underline cursor-pointer capitalize'>Marketing</span>
       </div>
     </aside>
   );
