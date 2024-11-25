@@ -1,4 +1,5 @@
 import express from 'express';
+import 'colors';
 
 import userRoute from './routes/user.route.js';
 import postRoute from './routes/post.route.js';
