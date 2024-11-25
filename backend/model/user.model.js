@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const { Schema } = mongoose;
+const { Schema, Types } = mongoose;
 
 const userSchema = new Schema(
   {
@@ -29,7 +29,12 @@ const userSchema = new Schema(
       type: String,
     },
     savedPosts: {
-      type: [String],
+      type: [
+        {
+          type: Types.ObjectId,
+          ref: 'Post',
+        },
+      ],
       default: [],
     },
     role: {
