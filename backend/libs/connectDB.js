@@ -3,10 +3,11 @@ import mongoose from 'mongoose';
 const devEnv = process.env.NODE_ENV !== 'production';
 const { DATABASE, DATABASE_PASSWORD, DATABASE_LOCAL } = process.env;
 
-const mongoURI = DATABASE.replace('<PASSWORD>', DATABASE_PASSWORD);
+// const mongoURI = DATABASE.replace('<PASSWORD>', DATABASE_PASSWORD);
 const dbLocal = DATABASE_LOCAL;
 
-const connectionStr = devEnv ? dbLocal : mongoURI;
+// const connectionStr = devEnv ? dbLocal : mongoURI;
+const connectionStr = dbLocal;
 
 export const connectDB = async () => {
   try {
