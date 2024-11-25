@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const { Schema } = mongoose;
+const { Schema, Types } = mongoose;
 
 const commentSchema = new Schema(
   {
@@ -8,6 +8,10 @@ const commentSchema = new Schema(
       type: String,
       required: [true, 'A comment must have a desc'],
       trim: true,
+    },
+    user: {
+      type: Types.ObjectId,
+      ref: 'User',
     },
   },
   { timestamps: true }
