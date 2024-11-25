@@ -1,7 +1,7 @@
 import app from './app.js';
 import { connectDB } from './libs/connectDB.js';
 
-const port = app.set('port', process.env.PORT || 3000);
+const port = app.set('port', process.env.PORT || 3030);
 
 app.listen(app.get('port'), async () => {
   await connectDB();
