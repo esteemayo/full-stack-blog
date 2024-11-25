@@ -12,6 +12,12 @@ const commentSchema = new Schema(
     user: {
       type: Types.ObjectId,
       ref: 'User',
+      required: [true, 'A comment must belong to a user'],
+    },
+    post: {
+      type: Types.ObjectId,
+      ref: 'Post',
+      required: [true, 'A comment must belong to a post'],
     },
   },
   { timestamps: true }

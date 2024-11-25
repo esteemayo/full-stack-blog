@@ -35,6 +35,7 @@ const postSchema = new Schema(
     user: {
       type: Types.ObjectId,
       ref: 'User',
+      required: [true, 'A post must belong to a user'],
     },
   },
   { timestamps: true }
