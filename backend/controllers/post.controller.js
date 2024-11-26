@@ -24,4 +24,8 @@ export const getPost = asyncHandler(async (req, res, next) => {
   return res.status(StatusCodes.OK).json(post);
 });
 
-export const createPost = asyncHandler(async (req, res, next) => {});
+export const createPost = asyncHandler(async (req, res, next) => {
+  const post = await Post.create({ ...req.body });
+
+  return res.status(StatusCodes.CREATED).json(post);
+});
