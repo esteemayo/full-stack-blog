@@ -2,10 +2,10 @@ import express from 'express';
 import morgan from 'morgan';
 import 'colors';
 
-import userRoute from './routes/user.route.js';
-import postRoute from './routes/post.route.js';
 import commentRoute from './routes/comment.route.js';
+import userRoute from './routes/user.route.js';
 import webHookRoute from './routes/webhook.route.js';
+import postRoute from './routes/post.route.js';
 
 import { NotFoundError } from './errors/not.found.error.js';
 import { errorHandlerMiddleware } from './middlewares/error.handler.middleware.js';
