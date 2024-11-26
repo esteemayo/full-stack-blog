@@ -5,6 +5,7 @@ import 'colors';
 import userRoute from './routes/user.route.js';
 import postRoute from './routes/post.route.js';
 import commentRoute from './routes/comment.route.js';
+import webHookRoute from './routes/webhook.route.js';
 
 import { NotFoundError } from './errors/not.found.error.js';
 import { errorHandlerMiddleware } from './middlewares/error.handler.middleware.js';
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use('/api/v1/users', userRoute);
 app.use('/api/v1/posts', postRoute);
 app.use('/api/v1/comments', commentRoute);
+app.use('/webhooks', webHookRoute);
 
 app.all('/*splat', (req, res, next) => {
   next(new NotFoundError(`Can't find ${req.originalUrl} on this server!`));
