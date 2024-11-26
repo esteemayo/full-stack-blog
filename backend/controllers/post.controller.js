@@ -29,6 +29,27 @@ export const createPost = async (req, res, next) => {
   return res.status(StatusCodes.CREATED).json(post);
 };
 
+export const updatePost = async (req, res, next) => {
+  const { id: postId } = req.params;
+
+  const post = await Post.findByIdAndUpdate(
+    postId,
+    { $set: { ...req.body } },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  if (!post) {
+    return next(
+      new NotFoundError(`There is no post found with the given ID → ${postId}`)
+    );
+  }
+
+  return res.status(StatusCodes.OK).json(post);
+};
+
 export const deletePost = async (req, res, next) => {
   const { id: postId } = req.params;
 
