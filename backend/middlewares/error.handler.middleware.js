@@ -15,12 +15,12 @@ const sendErrorProd = (err, res) =>
     message: err.message,
   });
 
-export const errorHandlerMiddleware = (err, res, req, next) => {
+export const errorHandlerMiddleware = (err, req, res, next) => {
   const customError = {
-    message: err.message || 'Something went wrong!',
-    status: err.status,
-    statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
     stack: err.stack,
+    status: err.status,
+    message: err.message || 'Something went wrong!',
+    statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
   };
 
   if (app.get('env') === 'development') {

@@ -6,6 +6,7 @@ import postRoute from './routes/post.route.js';
 import commentRoute from './routes/comment.route.js';
 
 import { NotFoundError } from './errors/not.found.error.js';
+import { errorHandlerMiddleware } from './middlewares/error.handler.middleware.js';
 
 const app = express();
 
@@ -19,5 +20,7 @@ app.use('/api/v1/comments', commentRoute);
 app.all('/*splat', (req, res, next) => {
   next(new NotFoundError(`Can't find ${req.originalUrl} on this server!`));
 });
+
+app.use(errorHandlerMiddleware());
 
 export default app;
