@@ -6,4 +6,6 @@ const router = express.Router();
 
 router.route('/').get(postController.getPosts).post(postController.createPost);
 
+router.get('/:slug', postController.getPost);
+
 export default router;
