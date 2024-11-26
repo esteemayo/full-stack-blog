@@ -9,6 +9,9 @@ import { NotFoundError } from './errors/not.found.error.js';
 
 const app = express();
 
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+
 app.use('/api/v1/users', userRoute);
 app.use('/api/v1/posts', postRoute);
 app.use('/api/v1/comments', commentRoute);

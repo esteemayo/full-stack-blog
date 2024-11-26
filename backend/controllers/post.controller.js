@@ -29,3 +29,17 @@ export const createPost = asyncHandler(async (req, res, next) => {
 
   return res.status(StatusCodes.CREATED).json(post);
 });
+
+export const deletePost = asyncHandler(async (req, res, next) => {
+  const { id: postId } = req.params;
+
+  const post = await Post.findByIdAndDelete(postId);
+
+  if (!post) {
+    return next(
+      new NotFoundError(`There is no post found with the given ID → ${postId}`)
+    );
+  }
+
+  return res.status(StatusCodes.NO_CONTENT).end();
+});
