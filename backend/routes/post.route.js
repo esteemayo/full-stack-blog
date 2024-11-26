@@ -8,6 +8,9 @@ router.route('/').get(postController.getPosts).post(postController.createPost);
 
 router.get('/:slug', postController.getPost);
 
-router.route('/:id').delete(postController.deletePost);
+router
+  .route('/:id')
+  .patch(postController.updatePost)
+  .delete(postController.deletePost);
 
 export default router;
