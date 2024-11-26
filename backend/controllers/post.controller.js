@@ -1,16 +1,15 @@
 import { StatusCodes } from 'http-status-codes';
-import asyncHandler from 'express-async-handler';
 
 import Post from '../model/post.model.js';
 import { NotFoundError } from '../errors/not.found.error.js';
 
-export const getPosts = asyncHandler(async (req, res, next) => {
+export const getPosts = async (req, res, next) => {
   const posts = await Post.find();
 
   return res.status(StatusCodes.OK).json(posts);
-});
+};
 
-export const getPost = asyncHandler(async (req, res, next) => {
+export const getPost = async (req, res, next) => {
   const { slug } = req.params;
 
   const post = await Post.findOne({ slug });
@@ -22,15 +21,15 @@ export const getPost = asyncHandler(async (req, res, next) => {
   }
 
   return res.status(StatusCodes.OK).json(post);
-});
+};
 
-export const createPost = asyncHandler(async (req, res, next) => {
+export const createPost = async (req, res, next) => {
   const post = await Post.create({ ...req.body });
 
   return res.status(StatusCodes.CREATED).json(post);
-});
+};
 
-export const deletePost = asyncHandler(async (req, res, next) => {
+export const deletePost = async (req, res, next) => {
   const { id: postId } = req.params;
 
   const post = await Post.findByIdAndDelete(postId);
@@ -42,4 +41,4 @@ export const deletePost = asyncHandler(async (req, res, next) => {
   }
 
   return res.status(StatusCodes.NO_CONTENT).end();
-});
+};
