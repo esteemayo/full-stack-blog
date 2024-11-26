@@ -1,4 +1,5 @@
 import express from 'express';
+import morgan from 'morgan';
 import 'colors';
 
 import userRoute from './routes/user.route.js';
@@ -9,6 +10,10 @@ import { NotFoundError } from './errors/not.found.error.js';
 import { errorHandlerMiddleware } from './middlewares/error.handler.middleware.js';
 
 const app = express();
+
+if (app.get('env') === 'development') {
+  app.use(morgan('dev'));
+}
 
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
