@@ -21,6 +21,6 @@ app.all('/*splat', (req, res, next) => {
   next(new NotFoundError(`Can't find ${req.originalUrl} on this server!`));
 });
 
-app.use(errorHandlerMiddleware());
+app.use(errorHandlerMiddleware);
 
 export default app;
