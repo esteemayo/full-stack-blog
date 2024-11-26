@@ -5,7 +5,7 @@ import userRoute from './routes/user.route.js';
 import postRoute from './routes/post.route.js';
 import commentRoute from './routes/comment.route.js';
 
-import { AppError } from './errors/app.error.js';
+import { NotFoundError } from './errors/not.found.error.js';
 
 const app = express();
 
@@ -14,7 +14,7 @@ app.use('/api/v1/posts', postRoute);
 app.use('/api/v1/comments', commentRoute);
 
 app.all('*', (req, res, next) => {
-  next(new AppError(`Can't find ${req.originalUrl} on this server!`));
+  next(new NotFoundError(`Can't find ${req.originalUrl} on this server!`));
 });
 
 export default app;
