@@ -9,6 +9,12 @@ export const getPosts = asyncHandler(async (req, res, next) => {
   return res.status(StatusCodes.OK).json(posts);
 });
 
-export const getPost = asyncHandler(async (req, res, next) => {});
+export const getPost = asyncHandler(async (req, res, next) => {
+  const { slug } = req.params;
+
+  const post = await Post.findOne({ slug });
+
+  return res.status(StatusCodes.OK).json(post);
+});
 
 export const createPost = asyncHandler(async (req, res, next) => {});
