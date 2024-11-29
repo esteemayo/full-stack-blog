@@ -17,7 +17,7 @@ const Navbar = () => {
 
   useEffect(() => {
     getToken().then((token) => console.log(token));
-  }, []);
+  }, [getToken]);
 
   return (
     <nav className='w-full h-16 md:h-20 flex items-center justify-between'>
@@ -36,9 +36,8 @@ const Navbar = () => {
           {isOpen ? 'X' : '☰'}
         </div>
         <div
-          className={`w-full h-screen flex flex-col items-center justify-center gap-8 font-medium text-lg capitalize absolute top-16  transition-all ease-in-out ${
-            isOpen ? '-right-0' : '-right-[100%]'
-          }`}
+          className={`w-full h-screen flex flex-col items-center justify-center gap-8 font-medium text-lg capitalize absolute top-16  transition-all ease-in-out ${isOpen ? '-right-0' : '-right-[100%]'
+            }`}
         >
           <Link to='/'>Home</Link>
           <Link to='/'>Trending</Link>
