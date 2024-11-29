@@ -17,6 +17,10 @@ const postSchema = new Schema(
       required: [true, 'A post must have a slug'],
       unique: true,
     },
+    category: {
+      type: String,
+      default: 'general',
+    },
     content: {
       type: String,
       required: [true, 'A post must have a content'],
