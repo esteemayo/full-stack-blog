@@ -10,8 +10,10 @@ import Write from './routes/Write';
 import SinglePost from './routes/SinglePost';
 import Home from './routes/Home.jsx';
 
-import MainLayout from './layouts/MainLayout.jsx';
 import QueryProvider from './providers/QueryProvider.jsx';
+import ToasterProvider from './providers/ToasterProvider.jsx';
+
+import MainLayout from './layouts/MainLayout.jsx';
 
 import './index.css';
 
@@ -58,6 +60,7 @@ createRoot(document.getElementById('root')).render(
     <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
       <QueryProvider>
         <RouterProvider router={router} />
+        <ToasterProvider />
       </QueryProvider>
     </ClerkProvider>
   </StrictMode>
