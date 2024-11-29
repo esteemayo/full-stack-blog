@@ -1,5 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
+import { clerkMiddleware } from '@clerk/express';
 import 'colors';
 
 import commentRoute from './routes/comment.route.js';
@@ -16,10 +17,32 @@ if (app.get('env') === 'development') {
   app.use(morgan('dev'));
 }
 
+app.use(clerkMiddleware);
 app.use('/webhooks', webHookRoute);
 
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+
+// app.get("/test",(req,res)=>{
+//   res.status(200).send("it works!")
+// })
+
+// app.get("/auth-state", (req, res) => {
+//   const authState = req.auth;
+//   res.json(authState);
+// });
+
+// app.get("/protect", (req, res) => {
+//   const {userId} = req.auth;
+//   if(!userId){
+//     return res.status(401).json("not authenticated")
+//   }
+//   res.status(200).json("content")
+// });
+
+// app.get("/protect2", requireAuth(), (req, res) => {
+//   res.status(200).json("content")
+// });
 
 app.use('/api/v1/users', userRoute);
 app.use('/api/v1/posts', postRoute);
