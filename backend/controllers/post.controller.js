@@ -40,6 +40,18 @@ export const createPost = async (req, res, next) => {
     return next(new NotFoundError('User not found!'));
   }
 
+  // let slug = req.body.title.replace(/ /g, '-').toLowerCase();
+
+  // let existingPost = await Post.findOne({ slug });
+
+  // let counter = 2;
+
+  // while (existingPost) {
+  //   slug = `${slug}-${counter}`;
+  //   existingPost = await Post.findOne({ slug });
+  //   counter++;
+  // }
+
   if (!req.body.user) req.body.user = user._id;
 
   const post = await Post.create({ ...req.body });
