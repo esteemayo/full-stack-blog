@@ -1,6 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import { clerkMiddleware } from '@clerk/express';
+import cors from 'cors;';
 import 'colors';
 
 import commentRoute from './routes/comment.route.js';
@@ -12,6 +13,9 @@ import { NotFoundError } from './errors/not.found.error.js';
 import { errorHandlerMiddleware } from './middlewares/error.handler.middleware.js';
 
 const app = express();
+
+app.use(cors());
+app.options('*', cors());
 
 if (app.get('env') === 'development') {
   app.use(morgan('dev'));
