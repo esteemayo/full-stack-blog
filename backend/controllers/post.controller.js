@@ -1,7 +1,10 @@
 import { StatusCodes } from 'http-status-codes';
 
 import Post from '../model/post.model.js';
+import User from '../model/user.model.js';
+
 import { NotFoundError } from '../errors/not.found.error.js';
+import { UnauthenticatedError } from './../errors/unauthenticated.error.js';
 
 export const getPosts = async (req, res, next) => {
   const posts = await Post.find();
@@ -24,6 +27,20 @@ export const getPost = async (req, res, next) => {
 };
 
 export const createPost = async (req, res, next) => {
+  const clerkUserId = req.auth.userId;
+
+  if (!clerkUserId) {
+    return next(new UnauthenticatedError('You are not authenticated!'));
+  }
+
+  const user = await User.findOne({ clerkUserId });
+
+  if (!user) {
+    return next(new NotFoundError('User not found!'));
+  }
+
+  if (!req.body.user) req.body.user = user._id;
+
   const post = await Post.create({ ...req.body });
 
   return res.status(StatusCodes.CREATED).json(post);
@@ -31,9 +48,20 @@ export const createPost = async (req, res, next) => {
 
 export const updatePost = async (req, res, next) => {
   const { id: postId } = req.params;
+  const clerkUserId = req.auth.userId;
 
-  const post = await Post.findByIdAndUpdate(
-    postId,
+  if (!clerkUserId) {
+    return next(new UnauthenticatedError('You are not authenticated!'));
+  }
+
+  const user = await User.findOne({ clerkUserId });
+
+  if (!user) {
+    return next(new NotFoundError('User not found!'));
+  }
+
+  const post = await Post.findOneAndUpdate(
+    { _id: postId, user: user._id },
     { $set: { ...req.body } },
     {
       new: true,
@@ -52,8 +80,19 @@ export const updatePost = async (req, res, next) => {
 
 export const deletePost = async (req, res, next) => {
   const { id: postId } = req.params;
+  const clerkUserId = req.auth.userId;
 
-  const post = await Post.findByIdAndDelete(postId);
+  if (!clerkUserId) {
+    return next(new UnauthenticatedError('You are not authenticated!'));
+  }
+
+  const user = await User.findOne({ clerkUserId });
+
+  if (!user) {
+    return next(new NotFoundError('User not found!'));
+  }
+
+  const post = await Post.findOneAndDelete({ _id: postId, user: user._id });
 
   if (!post) {
     return next(
