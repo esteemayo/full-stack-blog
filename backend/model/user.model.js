@@ -7,6 +7,7 @@ const userSchema = new Schema(
     clerkId: {
       type: String,
       required: [true, 'Please provide the clerkId'],
+      unique: true,
     },
     username: {
       type: String,
