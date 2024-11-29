@@ -1,3 +1,4 @@
+import ImageKit from 'imagekit';
 import { StatusCodes } from 'http-status-codes';
 
 import Post from '../model/post.model.js';
@@ -7,10 +8,25 @@ import { ForbiddenError } from './../errors/forbidden.error.js';
 import { NotFoundError } from '../errors/not.found.error.js';
 import { UnauthenticatedError } from './../errors/unauthenticated.error.js';
 
+const { IMAGE_KIT_URL_ENDPOINT, IMAGE_KIT_PUBLIC_KEY, IMAGE_KIT_PRIVATE_KEY } =
+  process.env;
+
+const imageKit = new ImageKit({
+  urlEndpoint: IMAGE_KIT_URL_ENDPOINT,
+  publicKey: IMAGE_KIT_PUBLIC_KEY,
+  privateKey: IMAGE_KIT_PRIVATE_KEY,
+});
+
 export const getPosts = async (req, res, next) => {
   const posts = await Post.find();
 
   return res.status(StatusCodes.OK).json(posts);
+};
+
+export const uploadAuth = async (req, res, next) => {
+  const result = imageKit.getAuthenticationParameters();
+
+  return res.status(StatusCodes.OK).json(result);
 };
 
 export const getPost = async (req, res, next) => {
