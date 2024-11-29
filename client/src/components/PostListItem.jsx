@@ -4,7 +4,7 @@ import Image from './Image';
 
 const PostListItem = () => {
   return (
-    <div className='flex flex-col xl:flex-row gap-8 mb-12'>
+    <article className='flex flex-col xl:flex-row gap-8 mb-12'>
       <div className='md:hidden xl:block xl:w-1/3'>
         <Image
           src='postImg.jpeg'
@@ -36,7 +36,7 @@ const PostListItem = () => {
           Read more
         </Link>
       </div>
-    </div>
+    </article>
   );
 };
 
