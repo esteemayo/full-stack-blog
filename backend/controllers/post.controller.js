@@ -3,6 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import Post from '../model/post.model.js';
 import User from '../model/user.model.js';
 
+import { ForbiddenError } from './../errors/forbidden.error.js';
 import { NotFoundError } from '../errors/not.found.error.js';
 import { UnauthenticatedError } from './../errors/unauthenticated.error.js';
 
@@ -92,12 +93,13 @@ export const deletePost = async (req, res, next) => {
     return next(new NotFoundError('User not found!'));
   }
 
-  const post = await Post.findOneAndDelete({ _id: postId, user: user._id });
+  const deletedPost = await Post.findOneAndDelete({
+    _id: postId,
+    user: user._id,
+  });
 
-  if (!post) {
-    return next(
-      new NotFoundError(`There is no post found with the given ID → ${postId}`)
-    );
+  if (!deletedPost) {
+    return next(new ForbiddenError('You can delete only your post!'));
   }
 
   return res.status(StatusCodes.NO_CONTENT).end();
