@@ -16,13 +16,14 @@ if (app.get('env') === 'development') {
   app.use(morgan('dev'));
 }
 
+app.use('/webhooks', webHookRoute);
+
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 app.use('/api/v1/users', userRoute);
 app.use('/api/v1/posts', postRoute);
 app.use('/api/v1/comments', commentRoute);
-app.use('/webhooks', webHookRoute);
 
 app.all('/*splat', (req, res, next) => {
   next(new NotFoundError(`Can't find ${req.originalUrl} on this server!`));
