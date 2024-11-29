@@ -14,7 +14,7 @@ import { errorHandlerMiddleware } from './middlewares/error.handler.middleware.j
 
 const app = express();
 
-app.use(cors());
+app.use(cors(process.env.CLIENT_URL));
 app.options('*', cors());
 
 if (app.get('env') === 'development') {
