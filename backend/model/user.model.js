@@ -4,6 +4,10 @@ const { Schema, Types } = mongoose;
 
 const userSchema = new Schema(
   {
+    clerkId: {
+      type: String,
+      required: [true, 'Please provide the clerkId'],
+    },
     username: {
       type: String,
       required: [true, 'Please provide your username'],
@@ -36,18 +40,6 @@ const userSchema = new Schema(
         },
       ],
       default: [],
-    },
-    role: {
-      type: String,
-      enum: {
-        values: ['admin', 'user'],
-        message: 'Role is either: admin or user',
-      },
-      default: 'user',
-    },
-    isActive: {
-      type: Boolean,
-      default: true,
     },
   },
   { timestamps: true }
