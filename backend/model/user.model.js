@@ -4,9 +4,9 @@ const { Schema, Types } = mongoose;
 
 const userSchema = new Schema(
   {
-    clerkId: {
+    clerkUserId: {
       type: String,
-      required: [true, 'Please provide the clerkId'],
+      required: [true, 'Please provide the clerkUserId'],
       unique: true,
     },
     username: {
