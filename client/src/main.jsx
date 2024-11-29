@@ -11,6 +11,7 @@ import SinglePost from './routes/SinglePost';
 import Home from './routes/Home.jsx';
 
 import MainLayout from './layouts/MainLayout.jsx';
+import QueryProvider from './providers/QueryProvider.jsx';
 
 import './index.css';
 
@@ -55,7 +56,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-      <RouterProvider router={router} />
+      <QueryProvider>
+        <RouterProvider router={router} />
+      </QueryProvider>
     </ClerkProvider>
   </StrictMode>
 );
