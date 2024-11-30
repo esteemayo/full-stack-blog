@@ -1,7 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import { clerkMiddleware } from '@clerk/express';
-import cors from 'cors;';
+import cors from 'cors';
 import 'colors';
 
 import commentRoute from './routes/comment.route.js';
