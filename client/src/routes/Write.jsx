@@ -1,14 +1,14 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { toast } from 'react-toastify';
 import { useAuth, useUser } from '@clerk/clerk-react';
 import ReactQuill from 'react-quill-new';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 
 import Upload from '../components/Upload';
+import http from '../services/httpService';
 
 import 'react-quill-new/dist/quill.snow.css';
-import http from '../services/httpService';
-import { toast } from 'react-toastify';
 
 const Write = () => {
   const queryClient = useQueryClient();
@@ -37,6 +37,10 @@ const Write = () => {
   });
 
   const [value, setValue] = useState('');
+  const [cover, setCover] = useState('');
+  const [img, setImg] = useState('');
+  const [video, setVideo] = useState('');
+  const [progress, setProgress] = useState(0);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -44,6 +48,7 @@ const Write = () => {
     const formData = new FormData(e.target);
 
     const data = {
+      img: cover.filePath || '',
       title: formData.get('title'),
       desc: formData.get('desc'),
       category: formData.get('category'),
@@ -52,6 +57,20 @@ const Write = () => {
 
     mutate(data);
   };
+
+  useEffect(() => {
+    img &&
+      setValue((value) => {
+        return `${value}<p><image src='${img.url} /></p>`;
+      });
+  }, [img]);
+
+  useEffect(() => {
+    video &&
+      setValue((value) => {
+        return `${value}<p><iframe class='ql-video' src='${video.url} /></p>`;
+      });
+  }, [video]);
 
   if (!isLoaded) {
     return <div className=''>Loading...</div>;
@@ -65,7 +84,7 @@ const Write = () => {
     <div className='h-[calc(100vh-64px)] md:h-[calc(100vh-80px)] flex flex-col gap-6'>
       <h1 className='text-cl font-light'>Create a New Post</h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-6 flex-1 mb-6'>
-        <Upload>
+        <Upload type='image' setData={setCover} setProgress={setProgress}>
           <button
             type='button'
             className='w-max p-2 shadow-md rounded-xl text-sm text-gray-500 bg-white'
@@ -101,26 +120,32 @@ const Write = () => {
           name='desc'
           placeholder='A Short Description'
         />
-        <div className='flex flex-1 '>
+        <div className='flex flex-1'>
           <div className='flex flex-col gap-2 mr-2'>
-            <Upload>🌆</Upload>
-            <Upload>▶️</Upload>
+            <Upload type='image' setData={setImg} setProgress={setProgress}>
+              🌆
+            </Upload>
+            <Upload type='video' setData={setVideo} setProgress={setProgress}>
+              ▶️
+            </Upload>
           </div>
           <ReactQuill
             theme='snow'
+            className='flex-1 rounded-xl bg-white shadow-md'
             value={value}
             onChange={setValue}
-            className='flex-1 rounded-xl bg-white shadow-md'
+            readOnly={0 < progress && progress < 100}
           />
         </div>
         <button
           type='button'
-          disabled={!!isPending}
+          disabled={!!isPending || (0 < progress && progress < 100)}
           className='bg-blue-800 text-white font-medium rounded-xl mt-4 p-2 w-36 disabled:bg-blue-400 disabled:cursor-not-allowed'
         >
           {isPending ? 'Loading...' : 'Send'}
         </button>
-        {isError && <span>{error.message}</span>}
+        {`Progress: ${progress}`}
+        {!!isError && <span>{error.message}</span>}
       </form>
     </div>
   );
