@@ -36,10 +36,11 @@ const Write = () => {
     },
   });
 
-  const [value, setValue] = useState('');
-  const [cover, setCover] = useState('');
   const [img, setImg] = useState('');
   const [video, setVideo] = useState('');
+
+  const [value, setValue] = useState('');
+  const [cover, setCover] = useState('');
   const [progress, setProgress] = useState(0);
 
   const handleSubmit = (e) => {
