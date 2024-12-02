@@ -18,9 +18,20 @@ const imageKit = new ImageKit({
 });
 
 export const getPosts = async (req, res, next) => {
-  const posts = await Post.find();
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 2;
 
-  return res.status(StatusCodes.OK).json(posts);
+  const skip = (page - 1) * limit;
+
+  const totalPosts = await Post.countDocuments();
+  const hasMore = page * limit < totalPosts;
+
+  const posts = await Post.find().limit(limit).skip(skip);
+
+  return res.status(StatusCodes.OK).json({
+    posts,
+    hasMore,
+  });
 };
 
 export const uploadAuth = async (req, res, next) => {
