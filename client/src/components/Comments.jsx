@@ -1,6 +1,25 @@
-import Comment from './Comment';
+import { useQuery } from '@tanstack/react-query';
 
-const Comments = () => {
+import Comment from './Comment';
+import { getComments } from '../services/commentService';
+
+const fetchComments = async (postId) => {
+  const { data } = await getComments(postId);
+  return data;
+};
+
+const Comments = ({ postId }) => {
+  const { isPending, error, data } = useQuery({
+    queryKey: ['comments', postId],
+    queryFn: () => fetchComments(),
+  });
+
+  if (isPending) return 'Loading...';
+
+  if (error) return `Something went wrong... ${error.message}`;
+
+  if (!data) return 'Comments not found!';
+
   return (
     <div className='flex flex-col gap-8 lg:w-3/5 mb-12'>
       <h1 className='text-xl text-gray-500 underline'>Comments</h1>
@@ -15,13 +34,9 @@ const Comments = () => {
         </button>
       </form>
 
-      <Comment />
-      <Comment />
-      <Comment />
-      <Comment />
-      <Comment />
-      <Comment />
-      <Comment />
+      {data.map((item) => {
+        return <Comment key={item._id} {...item} />;
+      })}
     </div>
   );
 };
