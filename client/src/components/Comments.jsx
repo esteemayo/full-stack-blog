@@ -1,4 +1,4 @@
-import { useAuth } from '@clerk/clerk-react';
+import { useAuth, useUser } from '@clerk/clerk-react';
 import { toast } from 'react-toastify';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -16,7 +16,9 @@ const addComment = async (postId, comment, token) => {
 };
 
 const Comments = ({ postId }) => {
+  const { user } = useUser();
   const { getToken } = useAuth();
+
   const queryClient = useQueryClient();
 
   const { isPending, error, data } = useQuery({
@@ -24,7 +26,7 @@ const Comments = ({ postId }) => {
     queryFn: () => fetchComments(),
   });
 
-  const { mutate } = useMutation({
+  const mutation = useMutation({
     mutationFn: async (comment) => {
       const token = await getToken();
       addComment(postId, comment, token);
@@ -46,7 +48,7 @@ const Comments = ({ postId }) => {
       desc: formData.get('desc'),
     };
 
-    mutate(data);
+    mutation.mutate(data);
   };
 
   return (
@@ -66,13 +68,29 @@ const Comments = ({ postId }) => {
         </button>
       </form>
 
-      {isPending
-        ? 'Loading...'
-        : error
-        ? 'Error loading comments!'
-        : data.map((comment) => {
-            return <Comment key={comment._id} {...comment} />;
+      {isPending ? (
+        'Loading...'
+      ) : error ? (
+        'Error loading comments!'
+      ) : (
+        <>
+          {mutation.isPending && (
+            <Comment
+              comment={{
+                desc: `${mutation.variables.desc} (Sending...)`,
+                createdAt: new Date(),
+                user: {
+                  img: user.imageUrl,
+                  username: user.username,
+                },
+              }}
+            />
+          )}
+          {data.map((comment) => {
+            return <Comment key={comment._id} comment={comment} />;
           })}
+        </>
+      )}
     </div>
   );
 };
