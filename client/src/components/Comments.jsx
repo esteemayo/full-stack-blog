@@ -34,8 +34,8 @@ const Comments = ({ postId }) => {
         </button>
       </form>
 
-      {data.map((item) => {
-        return <Comment key={item._id} {...item} />;
+      {data.map((comment) => {
+        return <Comment key={comment._id} {...comment} />;
       })}
     </div>
   );
