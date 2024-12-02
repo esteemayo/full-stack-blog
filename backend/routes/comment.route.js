@@ -7,6 +7,8 @@ const router = express.Router();
 router
   .route('/:postId')
   .get(commentController.getPostComments)
-  .post(commentController.addPost);
+  .post(commentController.addComment);
+
+router.delete('/:id', commentController.deleteComment);
 
 export default router;
