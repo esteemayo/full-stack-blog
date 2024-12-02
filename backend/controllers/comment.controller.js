@@ -31,7 +31,9 @@ export const addComment = async (req, res, next) => {
 
   const comment = await Comment.create({ ...req.body });
 
-  return res.status(StatusCodes.CREATED).json(comment);
+  setTimeout(() => {
+    return res.status(StatusCodes.CREATED).json(comment);
+  }, 3000);
 };
 
 export const deleteComment = async (req, res, next) => {
