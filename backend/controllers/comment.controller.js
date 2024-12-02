@@ -3,6 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import User from '../model/user.model.js';
 import Comment from '../model/comment.model.js';
 
+import { ForbiddenError } from '../errors/forbidden.error.js';
 import { UnauthenticatedError } from '../errors/unauthenticated.error.js';
 
 export const getPostComments = async (req, res) => {
@@ -31,4 +32,26 @@ export const addComment = async (req, res, next) => {
   const comment = await Comment.create({ ...req.body });
 
   return res.status(StatusCodes.CREATED).json(comment);
+};
+
+export const deleteComment = async (req, res, next) => {
+  const clerkUserId = req.auth.userId;
+  const { id: commentId } = req.params;
+
+  if (!clerkUserId) {
+    return next(new UnauthenticatedError('Not authenticated'));
+  }
+
+  const user = await User.findOne({ clerkUserId });
+
+  const comment = await Comment.findOneAndDelete({
+    _id: commentId,
+    user: user._id,
+  });
+
+  if (!comment) {
+    return next(new ForbiddenError('You can delete only your comment!'));
+  }
+
+  return res.status(StatusCodes.NO_CONTENT).end();
 };
