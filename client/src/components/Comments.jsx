@@ -49,10 +49,6 @@ const Comments = ({ postId }) => {
     mutate(data);
   };
 
-  if (isPending) return 'Loading...';
-
-  if (error) return `Something went wrong... ${error.message}`;
-
   return (
     <div className='flex flex-col gap-8 lg:w-3/5 mb-12'>
       <h1 className='text-xl text-gray-500 underline'>Comments</h1>
@@ -70,9 +66,13 @@ const Comments = ({ postId }) => {
         </button>
       </form>
 
-      {data.map((comment) => {
-        return <Comment key={comment._id} {...comment} />;
-      })}
+      {isPending
+        ? 'Loading...'
+        : error
+        ? 'Error loading comments!'
+        : data.map((comment) => {
+            return <Comment key={comment._id} {...comment} />;
+          })}
     </div>
   );
 };
