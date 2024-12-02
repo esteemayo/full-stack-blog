@@ -18,8 +18,6 @@ const Comments = ({ postId }) => {
 
   if (error) return `Something went wrong... ${error.message}`;
 
-  if (!data) return 'Comments not found!';
-
   return (
     <div className='flex flex-col gap-8 lg:w-3/5 mb-12'>
       <h1 className='text-xl text-gray-500 underline'>Comments</h1>
