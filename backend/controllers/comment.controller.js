@@ -26,8 +26,8 @@ export const addComment = async (req, res, next) => {
 
   const user = await User.findOne({ clerkUserId });
 
-  if (!req.body.user) req.body.user = user._id;
   if (!req.body.post) req.body.post = postId;
+  if (!req.body.user) req.body.user = user._id;
 
   const comment = await Comment.create({ ...req.body });
 
