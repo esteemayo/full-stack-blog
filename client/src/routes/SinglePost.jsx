@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 
-import Comments from '../components/Comments';
 import Image from './../components/Image';
-import PostMenuActions from '../components/PostMenuActions';
+import Comments from '../components/Comments';
+
 import Search from './../components/Search';
+import PostMenuActions from '../components/PostMenuActions';
 
 const SinglePost = () => {
   return (
