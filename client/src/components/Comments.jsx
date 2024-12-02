@@ -1,18 +1,53 @@
-import { useQuery } from '@tanstack/react-query';
+import { useAuth } from '@clerk/clerk-react';
+import { toast } from 'react-toastify';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import Comment from './Comment';
-import { getComments } from '../services/commentService';
+import { createComment, getComments } from '../services/commentService';
 
 const fetchComments = async (postId) => {
   const { data } = await getComments(postId);
   return data;
 };
 
+const addComment = async (postId, comment, token) => {
+  const { data } = await createComment(postId, comment, token);
+  return data;
+};
+
 const Comments = ({ postId }) => {
+  const { getToken } = useAuth();
+  const queryClient = useQueryClient();
+
   const { isPending, error, data } = useQuery({
     queryKey: ['comments', postId],
     queryFn: () => fetchComments(),
   });
+
+  const { mutate } = useMutation({
+    mutationFn: async (comment) => {
+      const token = await getToken();
+      addComment(postId, comment, token);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['comments', postId] });
+    },
+    onError: (error) => {
+      toast.error(error.response.data);
+    },
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    const data = {
+      desc: formData.get('desc'),
+    };
+
+    mutate(data);
+  };
 
   if (isPending) return 'Loading...';
 
@@ -21,7 +56,10 @@ const Comments = ({ postId }) => {
   return (
     <div className='flex flex-col gap-8 lg:w-3/5 mb-12'>
       <h1 className='text-xl text-gray-500 underline'>Comments</h1>
-      <form className='flex items-center justify-between gap-8 w-full'>
+      <form
+        onSubmit={handleSubmit}
+        className='flex items-center justify-between gap-8 w-full'
+      >
         <textarea
           name='desc'
           placeholder='Write a comment...'
