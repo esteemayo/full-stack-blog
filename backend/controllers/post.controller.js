@@ -46,7 +46,7 @@ export const uploadAuth = async (req, res, next) => {
 export const getPost = async (req, res, next) => {
   const { slug } = req.params;
 
-  const post = await Post.findOne({ slug });
+  const post = await Post.findOne({ slug }).populate('user', 'username img');
 
   if (!post) {
     return next(
