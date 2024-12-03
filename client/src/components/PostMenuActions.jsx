@@ -1,10 +1,10 @@
 import { useAuth, useUser } from '@clerk/clerk-react';
 import { toast } from 'react-toastify';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { deletePost } from '../services/postService';
-import { getSavedPosts } from '../services/userService';
+import { getSavedPosts, savePost } from '../services/userService';
 
 const fetchSavedPosts = async (token) => {
   const { data } = await getSavedPosts(token);
@@ -12,8 +12,13 @@ const fetchSavedPosts = async (token) => {
 };
 
 const removePost = async (postId, token) => {
-  const res = await deletePost(postId, token);
-  return res;
+  const { data } = await deletePost(postId, token);
+  return data;
+};
+
+const createSavePost = async (postId, token) => {
+  const { data } = await savePost(postId, token);
+  return data;
 };
 
 const PostMenuActions = ({ post }) => {
@@ -21,6 +26,7 @@ const PostMenuActions = ({ post }) => {
   const { getToken } = useAuth();
 
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const postId = post._id;
 
@@ -52,8 +58,29 @@ const PostMenuActions = ({ post }) => {
     },
   });
 
+  const saveMutation = useMutation({
+    mutationFn: async () => {
+      const token = await getToken();
+      createSavePost(postId, token);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['savedPosts'] });
+    },
+    onError: (error) => {
+      toast.error(error.response.data);
+    },
+  });
+
   const handleDelete = () => {
     deleteMutation.mutate();
+  };
+
+  const handleSave = () => {
+    if (!user) {
+      return navigate('/login');
+    }
+
+    saveMutation.mutate();
   };
 
   return (
@@ -64,7 +91,10 @@ const PostMenuActions = ({ post }) => {
       ) : error ? (
         'Saved post fetching failed'
       ) : (
-        <div className='flex items-center gap-2 py-2 text-sm cursor-pointer'>
+        <div
+          className='flex items-center gap-2 py-2 text-sm cursor-pointer'
+          onClick={handleSave}
+        >
           <svg
             xmlns='http://www.w3.org/2000/svg'
             viewBox='0 0 48 48'
