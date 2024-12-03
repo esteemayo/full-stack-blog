@@ -1,5 +1,4 @@
 import { StatusCodes } from 'http-status-codes';
-import asyncHandler from 'express-async-handler';
 
 import User from '../model/user.model.js';
 import { UnauthenticatedError } from '../errors/unauthenticated.error.js';
