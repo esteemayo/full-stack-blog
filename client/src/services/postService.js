@@ -11,4 +11,9 @@ export const getPost = (slug) => http.get(`${apiEndpoint}/${slug}`);
 
 export const createPost = (post) => http.post(apiEndpoint, post);
 
-export const deletePost = (postId) => http.delete(`${apiEndpoint}/${postId}`);
+export const deletePost = (postId, token) =>
+  http.delete(`${apiEndpoint}/${postId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
