@@ -10,3 +10,5 @@ export const getPosts = (pageParam) =>
 export const getPost = (slug) => http.get(`${apiEndpoint}/${slug}`);
 
 export const createPost = (post) => http.post(apiEndpoint, post);
+
+export const deletePost = (postId) => http.delete(`${apiEndpoint}/${postId}`);
