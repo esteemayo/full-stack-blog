@@ -15,7 +15,7 @@ export const getUserSavedPosts = async (req, res, next) => {
   return res.status(StatusCodes.OK).json(user.savedPosts);
 };
 
-export const SavedPost = async (req, res) => {
+export const savedPost = async (req, res) => {
   const { postId } = req.body;
   const clerkUserId = req.auth.userId;
 

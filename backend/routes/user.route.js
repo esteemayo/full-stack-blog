@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.get('/saved', userController.getUserSavedPosts);
 
-router.patch('/save', userController.SavePost);
+router.patch('/save', userController.savedPost);
 
 export default router;
