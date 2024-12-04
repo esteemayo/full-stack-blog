@@ -87,7 +87,9 @@ const Comments = ({ postId }) => {
             />
           )}
           {data.map((comment) => {
-            return <Comment key={comment._id} comment={comment} />;
+            return (
+              <Comment key={comment._id} comment={comment} postId={data._id} />
+            );
           })}
         </>
       )}
