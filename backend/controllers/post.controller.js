@@ -129,6 +129,14 @@ export const deletePost = async (req, res, next) => {
     return next(new UnauthenticatedError('You are not authenticated!'));
   }
 
+  const role = req.auth.sessionClaims?.metadata?.role || 'user';
+
+  if (role === 'admin') {
+    await Post.findByIdAndDelete(postId);
+
+    return res.status(StatusCodes.NO_CONTENT).end();
+  }
+
   const user = await User.findOne({ clerkUserId });
 
   if (!user) {
