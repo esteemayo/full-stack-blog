@@ -10,3 +10,10 @@ export const createComment = (postId, comment, token) =>
       Authorization: `Bearer ${token}`,
     },
   });
+
+export const deleteComment = (commentId, token) =>
+  http.delete(`${apiEndpoint}/${commentId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
