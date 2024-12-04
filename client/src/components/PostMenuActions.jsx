@@ -43,6 +43,7 @@ const PostMenuActions = ({ post }) => {
   });
 
   const isSaved = savedPosts?.some((p) => p === postId) || false;
+  const isAdmin = (user?.publicMetadata?.role === 'admin') | false;
 
   const deleteMutation = useMutation({
     mutationFn: async () => {
@@ -138,7 +139,7 @@ const PostMenuActions = ({ post }) => {
         <span>Feature</span>
         <span className='text-xs'>(in progress)</span>
       </div>
-      {user && post.user.username === user.username && (
+      {user && (post.user.username === user.username || isAdmin) && (
         <div
           className='flex items-center gap-2 py-2 text-sm cursor-pointer'
           onClick={handleDelete}
