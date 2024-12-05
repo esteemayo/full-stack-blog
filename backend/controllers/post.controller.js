@@ -18,6 +18,59 @@ const imageKit = new ImageKit({
 });
 
 export const getPosts = async (req, res, next) => {
+  const queryObj = {};
+  const { category, author, search, sort, featured } = req.query;
+
+  if (category) {
+    queryObj.category = category;
+  }
+
+  if (author) {
+    const user = await User.findOne({ username: author }).select('_id');
+
+    if (!user) {
+      return next(new NotFoundError('No post found!'));
+    }
+
+    queryObj.user = user._id;
+  }
+
+  if (search) {
+    queryObj.search = { $regex: search, $options: 'i' };
+  }
+
+  let sortObj = { createdAt: -1 };
+
+  if (sort) {
+    switch (sort) {
+      case 'newest':
+        sortObj = { createdAt: -1 };
+        break;
+
+      case 'oldest':
+        sortObj = { createdAt: 1 };
+        break;
+
+      case 'popular':
+        sortObj = { visit: -1 };
+        break;
+
+      case 'trending':
+        sortObj = { visit: -1 };
+        queryObj.createdAt = {
+          $gte: new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000),
+        };
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  if (featured) {
+    queryObj.featured = featured === 'true' ? true : false;
+  }
+
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 2;
 
@@ -26,8 +79,9 @@ export const getPosts = async (req, res, next) => {
   const totalPosts = await Post.countDocuments();
   const hasMore = page * limit < totalPosts;
 
-  const posts = await Post.find()
+  const posts = await Post.find(queryObj)
     .populate('user', 'username')
+    .sort(sortObj)
     .limit(limit)
     .skip(skip);
 
