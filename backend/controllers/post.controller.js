@@ -121,6 +121,40 @@ export const updatePost = async (req, res, next) => {
   return res.status(StatusCodes.OK).json(post);
 };
 
+export const featurePost = async (req, res, next) => {
+  const { postId } = req.body;
+  const clerkUserId = req.auth.userId;
+
+  if (!clerkUserId) {
+    return next(new UnauthenticatedError('You are not authenticated!'));
+  }
+
+  const role = req.auth.sessionClaims?.metadata?.role || 'user';
+
+  if (role !== 'admin') {
+    return next(new ForbiddenError('You cannot feature posts!'));
+  }
+
+  const post = await Post.findById(postId);
+
+  if (!post) {
+    return next(new NotFoundError('Post not found!'));
+  }
+
+  const isFeatured = post.isFeatured;
+
+  const updatedPost = await Post.findByIdAndUpdate(
+    postId,
+    { $set: { isFeatured: !isFeatured } },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  return res.status(StatusCodes.OK).json(updatedPost);
+};
+
 export const deletePost = async (req, res, next) => {
   const { id: postId } = req.params;
   const clerkUserId = req.auth.userId;
