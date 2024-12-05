@@ -7,7 +7,7 @@ export const getPosts = (pageParam, searchParams) => {
   console.log(searchParamsObj);
 
   return http.get(apiEndpoint, {
-    params: { page: pageParam, limit: 2, ...searchParamsObj },
+    params: { page: pageParam, limit: 10, ...searchParamsObj },
   });
 };
 
