@@ -16,13 +16,13 @@ const removePost = async (postId, token) => {
   return data;
 };
 
-const createSavePost = async (postId, token) => {
-  const { data } = await savePost(postId, token);
+const EditFeature = async (postId, token) => {
+  const { data } = await updateFeature(postId, token);
   return data;
 };
 
-const EditFeature = async (postId, token) => {
-  const { data } = await updateFeature(postId, token);
+const createSavePost = async (postId, token) => {
+  const { data } = await savePost(postId, token);
   return data;
 };
 
@@ -47,9 +47,6 @@ const PostMenuActions = ({ post }) => {
     },
   });
 
-  const isSaved = savedPosts?.some((p) => p === postId) || false;
-  const isAdmin = (user?.publicMetadata?.role === 'admin') | false;
-
   const deleteMutation = useMutation({
     mutationFn: async () => {
       const token = await getToken();
@@ -64,19 +61,6 @@ const PostMenuActions = ({ post }) => {
     },
   });
 
-  const saveMutation = useMutation({
-    mutationFn: async () => {
-      const token = await getToken();
-      createSavePost(postId, token);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['savedPosts'] });
-    },
-    onError: (error) => {
-      toast.error(error.response.data);
-    },
-  });
-
   const featureMutation = useMutation({
     mutationFn: async () => {
       const token = await getToken();
@@ -84,6 +68,19 @@ const PostMenuActions = ({ post }) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['post', post.slug] });
+    },
+    onError: (error) => {
+      toast.error(error.response.data);
+    },
+  });
+
+  const saveMutation = useMutation({
+    mutationFn: async () => {
+      const token = await getToken();
+      createSavePost(postId, token);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['savedPosts'] });
     },
     onError: (error) => {
       toast.error(error.response.data);
@@ -105,6 +102,9 @@ const PostMenuActions = ({ post }) => {
 
     saveMutation.mutate();
   };
+
+  const isSaved = savedPosts?.some((p) => p === postId) || false;
+  const isAdmin = (user?.publicMetadata?.role === 'admin') | false;
 
   return (
     <div className=''>
