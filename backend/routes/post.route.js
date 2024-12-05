@@ -10,6 +10,8 @@ router.route('/').get(postController.getPosts).post(postController.createPost);
 
 router.get('/:slug', postController.getPost);
 
+router.patch('/feature', postController.featurePost);
+
 router
   .route('/:id')
   .patch(postController.updatePost)
