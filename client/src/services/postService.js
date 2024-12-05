@@ -4,7 +4,7 @@ const apiEndpoint = '/posts';
 
 export const getPosts = (pageParam, searchParams) => {
   const searchParamsObj = Object.fromEntries([...searchParams]);
-  // console.log(searchParamsObj);
+  console.log(searchParamsObj);
 
   http.get(apiEndpoint, {
     params: { page: pageParam, limit: 2, searchParamsObj },
