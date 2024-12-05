@@ -1,20 +1,23 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useSearchParams } from 'react-router-dom';
 
 import PostListItem from './PostListItem';
 import { getPosts } from '../services/postService';
 
-const fetchPosts = async (pageParam) => {
-  const { data } = await getPosts(pageParam);
+const fetchPosts = async (pageParam, searchParams) => {
+  const { data } = await getPosts(pageParam, searchParams);
   return data;
 };
 
 const PostList = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const { data, error, fetchNextPage, hasNextPage, isFetching } =
     useInfiniteQuery({
-      queryKey: ['posts'],
-      queryFn: ({ pageParam = 1 }) => fetchPosts(pageParam),
+      queryKey: ['posts', searchParams.toString()],
+      queryFn: ({ pageParam = 1 }) => fetchPosts(pageParam, searchParams),
       initialPageParam: 1,
       getNextPageParam: (lastPage, pages) =>
         lastPage.hasMore ? pages.length + 1 : undefined,

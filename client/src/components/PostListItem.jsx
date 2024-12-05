@@ -19,7 +19,7 @@ const PostListItem = ({ title, desc, img, slug, user, category, createdAt }) => 
         </Link>
         <div className='flex items-center gap-2 text-gray-400 text-sm'>
           <span>Written by</span>
-          <Link className='text-blue-800 capitalize' to=''>
+          <Link className='text-blue-800 capitalize' to={`/posts?author=${user.username}`}>
             {user.username}
           </Link>
           <span>on</span>
