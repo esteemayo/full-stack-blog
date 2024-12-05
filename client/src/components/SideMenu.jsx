@@ -1,6 +1,19 @@
+import { useSearchParams } from 'react-router-dom';
+
 import Search from './Search';
 
 const SideMenu = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleFilterChange = (e) => {
+    if (searchParams.get('sort') !== e.target.value) {
+      setSearchParams({
+        ...Object.fromEntries(searchParams.entries()),
+        sort: e.target.value,
+      });
+    }
+  };
+
   return (
     <aside className='px-4 h-max sticky top-8'>
       <h1 className='mb-4 text-sm font-medium capitalize'>Search</h1>
@@ -13,6 +26,7 @@ const SideMenu = () => {
             name='sort'
             value='newest'
             className='appearance-none w-4 h-4 border-[1.5px] border-blue-800 cursor-pointer rounded-sm bg-white checked:bg-blue-800'
+            onChange={handleFilterChange}
           />
           Newest
         </label>
@@ -22,6 +36,7 @@ const SideMenu = () => {
             name='sort'
             value='popular'
             className='appearance-none w-4 h-4 border-[1.5px] border-blue-800 cursor-pointer rounded-sm bg-white checked:bg-blue-800'
+            onChange={handleFilterChange}
           />
           Most Popular
         </label>
@@ -31,6 +46,7 @@ const SideMenu = () => {
             name='sort'
             value='trending'
             className='appearance-none w-4 h-4 border-[1.5px] border-blue-800 cursor-pointer rounded-sm bg-white checked:bg-blue-800'
+            onChange={handleFilterChange}
           />
           Trending
         </label>
@@ -40,6 +56,7 @@ const SideMenu = () => {
             name='sort'
             value='oldest'
             className='appearance-none w-4 h-4 border-[1.5px] border-blue-800 cursor-pointer rounded-sm bg-white checked:bg-blue-800'
+            onChange={handleFilterChange}
           />
           Oldest
         </label>
