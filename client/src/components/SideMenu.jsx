@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 import Search from './Search';
 
@@ -63,14 +63,39 @@ const SideMenu = () => {
       </div>
       <h1 className='mt-8 mb-4 text-sm font-medium capitalize'>Categories</h1>
       <div className='flex flex-col gap-2 text-sm'>
-        <span className='underline cursor-pointer capitalize'>All</span>
-        <span className='underline cursor-pointer capitalize'>Web design</span>
-        <span className='underline cursor-pointer capitalize'>Development</span>
-        <span className='underline cursor-pointer capitalize'>Databases</span>
-        <span className='underline cursor-pointer capitalize'>
+        <Link className='underline cursor-pointer capitalize' to='/posts'>
+          All
+        </Link>
+        <Link
+          className='underline cursor-pointer capitalize'
+          to='/posts?category=web-design'
+        >
+          Web design
+        </Link>
+        <Link
+          className='underline cursor-pointer capitalize'
+          to='/posts?category=development'
+        >
+          Development
+        </Link>
+        <Link
+          className='underline cursor-pointer capitalize'
+          to='/posts?category=databases'
+        >
+          Databases
+        </Link>
+        <Link
+          className='underline cursor-pointer capitalize'
+          to='/posts?category=seo'
+        >
           Search engines
-        </span>
-        <span className='underline cursor-pointer capitalize'>Marketing</span>
+        </Link>
+        <Link
+          className='underline cursor-pointer capitalize'
+          to='/posts?category=marketing'
+        >
+          Marketing
+        </Link>
       </div>
     </aside>
   );
