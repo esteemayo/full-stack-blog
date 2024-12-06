@@ -1,7 +1,7 @@
 import express from 'express';
 
-import { increaseVisit } from '../middlewares/increaseVisit.js';
 import * as postController from '../controllers/post.controller.js';
+import { increaseVisit } from '../middlewares/increase.visit.middleware.js';
 
 const router = express.Router();
 
