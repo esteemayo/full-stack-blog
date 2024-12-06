@@ -13,9 +13,6 @@ router.get('/:slug', increaseVisit, postController.getPost);
 
 router.patch('/feature', postController.featurePost);
 
-router
-  .route('/:id')
-  .patch(postController.updatePost)
-  .delete(postController.deletePost);
+router.delete('/:id', postController.deletePost);
 
 export default router;

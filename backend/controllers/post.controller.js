@@ -143,38 +143,6 @@ export const createPost = async (req, res, next) => {
   return res.status(StatusCodes.CREATED).json(post);
 };
 
-export const updatePost = async (req, res, next) => {
-  const { id: postId } = req.params;
-  const clerkUserId = req.auth.userId;
-
-  if (!clerkUserId) {
-    return next(new UnauthenticatedError('You are not authenticated!'));
-  }
-
-  const user = await User.findOne({ clerkUserId });
-
-  if (!user) {
-    return next(new NotFoundError('User not found!'));
-  }
-
-  const post = await Post.findOneAndUpdate(
-    { _id: postId, user: user._id },
-    { $set: { ...req.body } },
-    {
-      new: true,
-      runValidators: true,
-    }
-  );
-
-  if (!post) {
-    return next(
-      new NotFoundError(`There is no post found with the given ID → ${postId}`)
-    );
-  }
-
-  return res.status(StatusCodes.OK).json(post);
-};
-
 export const featurePost = async (req, res, next) => {
   const { postId } = req.body;
   const clerkUserId = req.auth.userId;
