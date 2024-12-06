@@ -68,7 +68,7 @@ export const getPosts = async (req, res, next) => {
   }
 
   if (featured) {
-    queryObj.featured = featured === 'true' ? true : false;
+    queryObj.featured = true;
   }
 
   const page = parseInt(req.query.page) || 1;
