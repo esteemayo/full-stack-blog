@@ -11,6 +11,9 @@ export const getPosts = (pageParam, searchParams) => {
   });
 };
 
+export const getFeaturedPosts = () =>
+  http.get(`${apiEndpoint}?featured=true&limit=4&sort=newest`);
+
 export const getPost = (slug) => http.get(`${apiEndpoint}/${slug}`);
 
 export const createPost = (post) => http.post(apiEndpoint, post);
