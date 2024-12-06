@@ -104,7 +104,7 @@ const PostMenuActions = ({ post }) => {
   };
 
   const isSaved = savedPosts?.some((p) => p === postId) || false;
-  const isAdmin = (user?.publicMetadata?.role === 'admin') | false;
+  const isAdmin = (user?.publicMetadata?.role === 'admin') || false;
 
   return (
     <div className=''>
@@ -134,8 +134,8 @@ const PostMenuActions = ({ post }) => {
                     ? 'none'
                     : 'black'
                   : isSaved
-                  ? 'black'
-                  : 'none'
+                    ? 'black'
+                    : 'none'
               }
             />
           </svg>
@@ -166,8 +166,8 @@ const PostMenuActions = ({ post }) => {
                     ? 'none'
                     : 'black'
                   : post.isFeatured
-                  ? 'black'
-                  : 'none'
+                    ? 'black'
+                    : 'none'
               }
             />
           </svg>
