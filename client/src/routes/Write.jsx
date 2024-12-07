@@ -139,7 +139,7 @@ const Write = () => {
           />
         </div>
         <button
-          type='button'
+          type='submit'
           disabled={!!isPending || (0 < progress && progress < 100)}
           className='bg-blue-800 text-white font-medium rounded-xl mt-4 p-2 w-36 disabled:bg-blue-400 disabled:cursor-not-allowed'
         >
